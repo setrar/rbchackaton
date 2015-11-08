@@ -10,6 +10,7 @@ import play.api.libs.json.Json.toJson
 import play.api.mvc.{Action, AnyContent, Controller}
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * The Artists controllers encapsulates the Rest endpoints and the interaction with the Slick, via ReactiveSlick
@@ -29,62 +30,59 @@ class Balances @Inject()(val balancesDAO: BalanceDAO)
 
   def createBalance:Action[JsValue] = Action.async(parse.json) {
     request =>
-//      request.body.validate[Balance].map {
-//        balance =>
-//          balancesDAO.insert(balance = Balance(
-//              account = balance.account
-//            , balance = balance.balanceDiff
-//            , balanceDiff = balance.balanceDiff
-//            , time = balance.time)).map {
-//            lastError =>
-//              logger.debug(s"Successfully inserted with LastError: $lastError")
-//              Created(s"Artist Created")
-//          }
-//      }.getOrElse(Future.successful(BadRequest("invalid json")))
-            Future.successful(BadRequest("invalid json"))
+      request.body.validate[Balance].map {
+        balance =>
+          balancesDAO.insert(balance = Balance(
+              account = balance.account
+            , balance = balance.balanceDiff
+            , balanceDiff = balance.balanceDiff
+            , time = balance.time)).map {
+            lastError =>
+              logger.debug(s"Successfully inserted with LastError: $lastError")
+              Created(s"Artist Created")
+          }
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
 
   }
 
   def updateBalance(account: String): Action[JsValue] = Action.async(parse.json) {
     request =>
-//      request.body.validate[Balance].map {
-//        balance =>
-//            balancesDAO.find(balance.account).flatMap {
-//              case Some(x) =>
-//                val bal = Balance(
-//                  account = balance.account
-//                  , balance = balance.balanceDiff
-//                  , balanceDiff = balance.balanceDiff
-//                  , time = balance.time)
-//              balancesDAO.update(balance = bal).map {
-//                updateCount =>
-//                  if (updateCount == 1) {
-//                    logger.debug(s"Successfully updated with updateCount: $updateCount")
-//                    Created(s"Balance Updated")
-//                  } else {
-//                    logger.debug(s"Successfully updated with LastError: $updateCount")
-//                    BadRequest(s"Balance $account not Updated")
-//                  }
-//              }
-//              case None => Future.successful(BadRequest("Balance not found"))
-//            }
-//      }.getOrElse(Future.successful(BadRequest("invalid json")))
-      Future.successful(BadRequest("invalid json"))
+      request.body.validate[Balance].map {
+        balance =>
+            balancesDAO.find(balance.account).flatMap {
+              case Some(x) =>
+                val bal = Balance(
+                  account = balance.account
+                  , balance = balance.balanceDiff
+                  , balanceDiff = balance.balanceDiff
+                  , time = balance.time)
+              balancesDAO.update(balance = bal).map {
+                updateCount =>
+                  if (updateCount == 1) {
+                    logger.debug(s"Successfully updated with updateCount: $updateCount")
+                    Created(s"Balance Updated")
+                  } else {
+                    logger.debug(s"Successfully updated with LastError: $updateCount")
+                    BadRequest(s"Balance $account not Updated")
+                  }
+              }
+              case None => Future.successful(BadRequest("Balance not found"))
+            }
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
   }
 
   def findBalances:Action[AnyContent] = Action.async {
     // gather all the JsObjects in a list
-//    for {
-//      records <-
-//        for (balances <- balancesDAO.all()) yield
-//        for (balance <- balances) yield
-//          Balance(
-//            account = balance.account
-//            , balance = balance.balanceDiff
-//            , balanceDiff = balance.balanceDiff
-//            , time = balance.time)
-//    } yield Ok(toJson(records))
-    Future.successful(BadRequest("invalid json"))
+    for {
+      records <-
+        for (balances <- balancesDAO.all()) yield
+        for (balance <- balances) yield
+          Balance(
+            account = balance.account
+            , balance = balance.balanceDiff
+            , balanceDiff = balance.balanceDiff
+            , time = balance.time)
+    } yield Ok(toJson(records))
   }
 
 }

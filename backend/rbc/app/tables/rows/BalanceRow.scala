@@ -13,8 +13,8 @@ class BalanceRow(tag: Tag) extends Table[EntityBalance](tag, "Balances") {
 
   def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
   def account = column[String]("Account")
-  def balance = column[String]("Balance")
-  def balanceDiff = column[String]("BalanceDiff")
+  def balance = column[Long]("Balance")
+  def balanceDiff = column[Long]("BalanceDiff")
   def time = column[String]("Time")
 
 //  def idx = index("idx_n123", number, unique = true)

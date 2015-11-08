@@ -15,18 +15,33 @@ object InitBalances {
   val list = List(
     EntityBalance(
         id = 1
-      , account = "CHQ01"
-      , balance = "$2,500.00"
-      , balanceDiff = "+$100.00"
+      , account = "CHQ"
+      , balance = 500000
+      , balanceDiff = -10000
       , time = "5d9h"
     )
   ,
     EntityBalance(
       id = 1
-      , account = "SAV01"
-      , balance = "$15,500.00"
-      , balanceDiff = "+$1,000.00"
-      , time = "15d0h"
+      , account = "SAV"
+      , balance = 132551045
+      , balanceDiff = 1150000
+      , time = "1d0h"
+    )
+  , EntityBalance(
+    id = 1
+    , account = "VISA"
+    , balance = 499999
+    , balanceDiff = 29
+    , time = "15d0h"
+    )
+    , EntityBalance(
+      id = 1
+      , account = "MC"
+      , balance = 1500
+      , balanceDiff = -250000
+      , time = "45d0h"
     )
   )
+
 }

@@ -11,7 +11,7 @@ class BalanceService
         @$log.debug "listBalances()"
         deferred = @$q.defer()
 
-        @$http.get("/Balances")
+        @$http.get("/balances")
         .success((data, status, headers) =>
                 @$log.info("Successfully listed Balances - status #{status}")
                 deferred.resolve(data)

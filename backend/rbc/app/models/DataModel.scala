@@ -11,7 +11,7 @@ trait TId {
 
 trait TBalance{
   def account: String
-  def balance: String
-  def balanceDiff: String
+  def balance: Long
+  def balanceDiff: Long
   def time: String
 }
