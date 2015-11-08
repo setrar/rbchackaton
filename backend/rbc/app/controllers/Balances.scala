@@ -79,7 +79,7 @@ class Balances @Inject()(val balancesDAO: BalanceDAO)
         for (balance <- balances) yield
           Balance(
             account = balance.account
-            , balance = balance.balanceDiff
+            , balance = balance.balance
             , balanceDiff = balance.balanceDiff
             , time = balance.time)
     } yield Ok(toJson(records))
