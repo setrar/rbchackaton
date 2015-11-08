@@ -7,8 +7,7 @@ class UpdateBalanceCtrl
 
   updateBalance: () ->
       @$log.debug "updateBalance()"
-      @balance.active = true
-      @BalanceService.updateBalance(@$routeParams.number, @balance)
+      @BalanceService.updateBalance(@$routeParams.account, @balance)
       .then(
           (data) =>
             @$log.debug "Promise returned #{data} Balance"
@@ -21,17 +20,15 @@ class UpdateBalanceCtrl
 
   findBalance: () ->
       # route params must be same name as provided in routing url in app.coffee
-      number    = @$routeParams.number
-      @$log.debug "findBalance route params: #{number}"
+      account    = @$routeParams.account
+      @$log.debug "findBalance route params: #{account}"
 
       @BalanceService.listBalances()
       .then(
         (data) =>
           @$log.debug "Promise returned #{data.length} Balances"
 
-          # find a balance with the number and bandName
-          # as filter returns an array, get the first object in it, and return it
-          @balance = (data.filter (balance) -> balance.number is number )[0]
+          @balance = (data.filter (balance) -> balance.account is account )[0]
       ,
         (error) =>
           @$log.error "Unable to get Balances: #{error}"

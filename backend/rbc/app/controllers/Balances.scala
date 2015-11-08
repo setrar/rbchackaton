@@ -34,7 +34,7 @@ class Balances @Inject()(val balancesDAO: BalanceDAO)
         balance =>
           balancesDAO.insert(balance = Balance(
               account = balance.account
-            , balance = balance.balanceDiff
+            , balance = balance.balance
             , balanceDiff = balance.balanceDiff
             , time = balance.time)).map {
             lastError =>
@@ -53,7 +53,7 @@ class Balances @Inject()(val balancesDAO: BalanceDAO)
               case Some(x) =>
                 val bal = Balance(
                   account = balance.account
-                  , balance = balance.balanceDiff
+                  , balance = balance.balance
                   , balanceDiff = balance.balanceDiff
                   , time = balance.time)
               balancesDAO.update(balance = bal).map {

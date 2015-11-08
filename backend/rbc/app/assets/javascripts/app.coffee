@@ -21,7 +21,7 @@ angular.module('myApp.routeConfig', ['ngRoute'])
             .when('/balances/create', {
                 templateUrl: '/assets/partials/balances/create.html'
             })
-            .when('/balances/edit/:number', {
+            .when('/balances/edit/:account', {
                 templateUrl: '/assets/partials/balances/update.html'
             })
             .otherwise({redirectTo: '/'})])
