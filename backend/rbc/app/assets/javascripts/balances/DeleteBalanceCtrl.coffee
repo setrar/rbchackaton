@@ -1,22 +1,9 @@
-class UpdateBalanceCtrl
+class DeleteBalanceCtrl
 
   constructor: (@$log, @$location, @$routeParams, @BalanceService) ->
-      @$log.debug "constructing UpdateBalanceController"
+      @$log.debug "constructing DeleteBalanceController"
       @balance = {}
       @findBalance()
-
-  updateBalance: () ->
-      @$log.debug "updateBalance()"
-      @BalanceService.updateBalance(@$routeParams.account, @balance)
-      .then(
-          (data) =>
-            @$log.debug "Promise returned #{data} Balance"
-            @balance = data
-            @$location.path("/")
-        ,
-        (error) =>
-            @$log.error "Unable to update Balance: #{error}"
-      )
 
   deleteBalance: () ->
       @$log.debug "deleteBalance()"
@@ -47,4 +34,4 @@ class UpdateBalanceCtrl
           @$log.error "Unable to get Balances: #{error}"
       )
 
-controllersModule.controller('UpdateBalanceCtrl', ['$log', '$location', '$routeParams', 'BalanceService', UpdateBalanceCtrl])
+controllersModule.controller('DeleteBalanceCtrl', ['$log', '$location', '$routeParams', 'BalanceService', DeleteBalanceCtrl])

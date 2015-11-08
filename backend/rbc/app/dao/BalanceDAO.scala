@@ -49,4 +49,9 @@ class BalanceDAO extends AbstractDAO {
     def update(balance: Balance): Future[Int] = db.run {
       Balances.filter(_.account === balance.account).map(b => (b.account, b.balance, b.balanceDiff, b.time)).update((balance.account, balance.balance, balance.balanceDiff, balance.time))
     }
+
+    def delete(balance: Balance): Future[Int] = db.run {
+      Balances.filter(_.account === balance.account).delete
+    }
+
 }

@@ -37,6 +37,21 @@ class BalanceService
             )
         deferred.promise
 
+    deleteBalance: (account, balance) ->
+        @$log.debug "deleteBalance #{angular.toJson(balance, true)}"
+        deferred = @$q.defer()
+
+        @$http.post("/balanceLess/#{account}", balance)
+        .success((data, status, headers) =>
+                @$log.info("Successfully deleted Balance - status #{status}")
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to delete balance - status #{status}")
+                deferred.reject(data)
+            )
+        deferred.promise
+
     updateBalance: (account, balance) ->
       @$log.debug "updateBalance #{angular.toJson(balance, true)}"
       deferred = @$q.defer()

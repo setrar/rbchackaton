@@ -71,6 +71,32 @@ class Balances @Inject()(val balancesDAO: BalanceDAO)
       }.getOrElse(Future.successful(BadRequest("invalid json")))
   }
 
+  def deleteBalance(account: String): Action[JsValue] = Action.async(parse.json) {
+    request =>
+      request.body.validate[Balance].map {
+        balance =>
+          balancesDAO.find(balance.account).flatMap {
+            case Some(x) =>
+              val bal = Balance(
+                account = balance.account
+                , balance = balance.balance
+                , balanceDiff = balance.balanceDiff
+                , time = balance.time)
+              balancesDAO.delete(balance = bal).map {
+                updateCount =>
+                  if (updateCount == 1) {
+                    logger.debug(s"Successfully deleted with updateCount: $updateCount")
+                    Created(s"Balance Deleted")
+                  } else {
+                    logger.debug(s"Successfully deleted with LastError: $updateCount")
+                    BadRequest(s"Balance $account not Deleted")
+                  }
+              }
+            case None => Future.successful(BadRequest("Balance not found"))
+          }
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
+
   def findBalances:Action[AnyContent] = Action.async {
     // gather all the JsObjects in a list
     for {

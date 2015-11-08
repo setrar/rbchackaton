@@ -24,6 +24,9 @@ angular.module('myApp.routeConfig', ['ngRoute'])
             .when('/balances/edit/:account', {
                 templateUrl: '/assets/partials/balances/update.html'
             })
+            .when('/balances/delete/:account', {
+                templateUrl: '/assets/partials/balances/delete.html'
+            })
             .otherwise({redirectTo: '/'})])
     .config(['$locationProvider', ($locationProvider) ->
         $locationProvider.html5Mode({

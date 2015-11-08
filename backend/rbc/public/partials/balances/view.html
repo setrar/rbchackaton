@@ -46,6 +46,9 @@
                     <td>
                         <a ng-href="/#/balances/edit/{{bal.account}}" class="btn btn-success pull-right" id="btn_balance_update">Edit Balance</a>
                     </td>
+                    <td>
+                        <a ng-href="/#/balances/delete/{{bal.account}}" class="btn btn-danger pull-right" id="btn_balance_delete">[X]</a>
+                    </td>
                 </tr>
                 <tr ng-hide="bc.balances.length">
                     <td colspan="3">

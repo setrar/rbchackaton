@@ -12,6 +12,7 @@ GET     /randomUUID                 @controllers.Application.randomUUID
 GET     /balances                    @controllers.Balances.findBalances
 POST    /balance                     @controllers.Balances.createBalance
 PUT     /balance/:account            @controllers.Balances.updateBalance(account: String)
+PUT     /balanceLess/:account        @controllers.Balances.deleteBalance(account: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
