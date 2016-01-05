@@ -2,7 +2,7 @@ package tables
 
 import org.flywaydb.core.Flyway
 import com.typesafe.config.ConfigFactory
-import services.{ConfigService, AuthService, BaseService}
+import services.{ ConfigService, AuthService, BaseService }
 import scala.io
 
 object Slick extends BaseService {
@@ -14,15 +14,16 @@ object Slick extends BaseService {
     lazy val db = {
       logger.info(s"Setting up DB for rdbms $rdbms")
       val db = slick.driver.MySQLDriver.api.Database.forConfig("", config)
-//      val flyway = new Flyway()
-//      flyway.setDataSource(ds)
-//      AuthService.getAppRealmVersion(rdbms, flyway) match {
-//        case AuthService.Version(_, Some(dbVersion), Some(appDBVersion)) if appDBVersion != dbVersion =>
-//          throw new Exception(
-//            s"App DBVersion:%s and DBVersion: %s are not in sync.".format(dbVersion, appDBVersion)
-//          )
-//        case _=> // Either there are no version info yet, or the db and appdbVersion are the same
-//      }
+      println(db.source.asInstanceOf[slick.jdbc.hikaricp.HikariCPJdbcDataSource].hconf)
+      //      val flyway = new Flyway()
+      //      flyway.setDataSource(ds)
+      //      AuthService.getAppRealmVersion(rdbms, flyway) match {
+      //        case AuthService.Version(_, Some(dbVersion), Some(appDBVersion)) if appDBVersion != dbVersion =>
+      //          throw new Exception(
+      //            s"App DBVersion:%s and DBVersion: %s are not in sync.".format(dbVersion, appDBVersion)
+      //          )
+      //        case _=> // Either there are no version info yet, or the db and appdbVersion are the same
+      //      }
       db
     }
 

@@ -2,8 +2,10 @@ package tables
 
 import org.scalatest.FunSpec
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.time.{Seconds, Span}
-import dao.{BalanceDAO}
+import org.scalatest.time.{ Seconds, Span }
+import dao.{ BalanceDAO }
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.async.Async.{ async, await }
 
 class BalancesUnitTest extends FunSpec with MySQLSpec with ScalaFutures {
 
@@ -13,9 +15,10 @@ class BalancesUnitTest extends FunSpec with MySQLSpec with ScalaFutures {
 
   describe("Balance testing") {
 
-    it ("should find a Balance") {
-//      val all = balanceDao.all().futureValue
-//      assert(all.size>1)
+    it("should find a Balance") {
+      async {
+        assert(await(balanceDao.all()).size > 1)
+      }
     }
   }
 

@@ -22,19 +22,18 @@ object InitDatabase extends App {
   val doInit = args.contains("--init")
   val rdbms = args.filter(!_.startsWith("-"))
 
-  if (doInit) rdbms.foreach{ x => setupBaseLine(setupDatabase(x)) }
+  if (doInit) rdbms.foreach { x => setupBaseLine(setupDatabase(x)) }
   if (doSeed) rdbms.foreach(seedTestData)
 
   def seedTestData(realm: String): Unit = {
-      seedTestData()
+    seedTestData()
   }
 
   def seedTestData() = {
     val actions = for {
-      _ <- Slick.db.run {DBIO.seq(
-          Tables.Balances.schema.create
-        , Tables.Balances ++= tables.seed.InitBalances.list
-      )
+      _ <- Slick.db.run {
+        DBIO.seq(
+          Tables.Balances.schema.create, Tables.Balances ++= tables.seed.InitBalances.list)
       }
     } yield ()
     Await.ready(actions, Duration.Inf)
@@ -65,19 +64,19 @@ object InitDatabase extends App {
 
     val flyway = new Flyway()
 
-      flyway.setDataSource(ds)
+    flyway.setDataSource(ds)
 
-      val info = flyway.info
-      val latestVersion = if (info.all.nonEmpty)
-        info.all.last.getVersion.getVersion
-      else
-        flyway.getBaselineVersion.getVersion
+    val info = flyway.info
+    val latestVersion = if (info.all.nonEmpty)
+      info.all.last.getVersion.getVersion
+    else
+      flyway.getBaselineVersion.getVersion
 
-      flyway.setBaselineOnMigrate(true)
-      flyway.setBaselineVersionAsString(latestVersion)
-      flyway.baseline()
+    flyway.setBaselineOnMigrate(true)
+    flyway.setBaselineVersionAsString(latestVersion)
+    flyway.baseline()
 
-    }
+  }
 
 }
 

@@ -72,3 +72,5 @@ libraryDependencies ++= {
     "com.typesafe.slick"         %%  "slick-hikaricp"      % slickVersion      % "compile"
   )
 }
+
+libraryDependencies += "org.scala-lang.modules" %% "scala-async" % "0.9.6-RC2" % "test"
